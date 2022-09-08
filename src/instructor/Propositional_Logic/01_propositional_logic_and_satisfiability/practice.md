@@ -7,7 +7,7 @@ The *Solver.check* command of Z3 returns one of two answers:
 - *sat* if there's at least one interpretation that makes the given proposition, P, true
 - unsat, if there is no solution to the given proposition
 
-What's missing is an explicit check for the *validity* of P. How can you easily use Z3 to determine if P is *valid?*
+What's missing is an explicit check for the *validity* of P. How can you easily use Z3 to determine if P is *valid?* if opposite proposition is unsat. we can make a program that adds a not infront of the equation(which is in a parathensis). then we can use solver.check. 
 
 Demonstrate your insight by using Z3 to prove that for any propositional (Boolean) variable, X, the proposition "X or not X" is *valid.* Do this by editing the *example_validity_z3.py* file and following the instructions there.
 
