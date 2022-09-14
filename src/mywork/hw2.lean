@@ -1,4 +1,4 @@
-  /-
+/-
 Below we've listed 19 proposed "inference rules" for reasoning 
 with propositional logic. Remember that such a rule has a context, 
 which is a list of propositions that you already know, or assume 

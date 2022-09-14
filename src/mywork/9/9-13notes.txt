@@ -1,0 +1,69 @@
+Propsotional logic
+ - Syntax
+    Basic truth constants(true, false)
+    Boolean variables for propsotiions(x, y, z)
+    Basic logical connectives(ANd, not, or)
+ - Semantics
+    An interpretation gives a boolean value to each variable in an expression
+    Logical connectives are also interpreted as speciying boolean functions
+    The meaning of a larger proposition is composed from meanings of its parts
+Propositional logic extended with background theories
+ - Syntax
+    Same logical connectives with same meaning
+    More propositions  for background theories(limited) like arithmetic
+ - Semantics 
+Limits of Propositional logic
+ - Variables can't refer to objects of arbitrary types(no notion of types)
+    we can do booleans, but we can't do a person, a cat girl, an electron, etc.
+ - Cannot quantify over sets of objects, or over functions, n-ary relations, etc. (propsotiional logic can't do/saying the 3 things listed below)
+    Every intrepretation for proposition P makes P true(P is valid)
+    Some interpretation for proposition P makes P true(P is satisfiable)
+    No interpretation for proposition P makes P true(P is unsatisifiable)
+ - No mechanisms for parameterizing propositions
+    we can have long variable names(KantIsHuman, BobIsHuman) and we can set that to yes or no
+    However, we can't have any parameters. No IsHuman(X) where X is a person
+    Predicates are like proposition builders(parameterizing proposition). They take some inputs and make a proposition
+    Predicates can have multiple parameters
+    A proposition is a degenerate predicate with no parameters
+Predicate Logic
+ - Predicate Logic address the limitations of Propositional logic by expanding the stuff you can do
+    Variables can range over values of arbitrary types 
+    Syntax adds Universal and existential quantifiers
+        For all x, or for any x, P(x) is true
+        There exists, for some value of x, where P(x) is true
+ - Increase of expresiveness has heavy constants
+    More complex notions of interpretations and truth
+    No longer any possibilities of an automated satisfiability solver
+    Can no longer rely on truth table checking as a test of validity
+    One must use deductive reasoning(Inference rules) to check validity
+    A chain of deductive inferences showing validity is what we usuallly mean by a proof
+    
+Proofs in propositional and predicate Logic
+ - Propositional Logic
+   Use a truth table
+ - Predicate Logic
+   Assume H: X ^ Y(Hypothesis, or premise)
+   Goal: In this context, show Y ^ X 
+   Apply and Eliminiation To H to deduce x and y seperately
+   Apply And introduction to Y and X (in this order) to show that Y^X
+   Now that we showed that if X^Y then Y ^X, apply arrow introduction to conclude X^Y => Y ^ x
+ - Arrow introduction rule: If in a context with H, you can prove K, you can deduce H=>K(aka a theorem)
+
+Major Variants of Predciate Logic
+ - First order predicate logic
+   No explicit types 
+   use predicates in lieu in types
+   Ex. ( For all x, isHuman x => is mortal x)
+   You can quantify over sets of objects, but not over functions, relations, predicates, propositions
+   Predicates can have objects but not predicates, functions, relations, propositions as gruements
+ - Higher-Order constructive Logic
+   Comes wiht expressive type systems, including user-defined types
+   If Human is a defined type, you can write For all(x : Human), is mortal
+   In FOPL, you can write isMortal oxygen and get false; in HOCL, its just a type error
+   In FOPL, you can quantify over functions, propositions, etc. 
+   HOCL can serve as both a logic and a typed functional programming language
+
+Someone likes everyone. For some (P:Person, such that all (q:Person), Likes p q 
+For every (P: Person) there is some (Q:Person), Likes P Q. 
+There is some (P:Person), where every (Q: Person), Likes Q P 
+For every Person (P: Person), where every (Q: Person) Not likes Q P

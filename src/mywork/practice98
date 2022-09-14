@@ -1,0 +1,16 @@
+from z3 import *
+tri = Int('tri')
+squ = Int('squ')
+cir = Int('cir')
+
+s = Solver()
+l = tri+squ+cir == 10
+a = cir + squ - tri == 6
+p = cir +tri - squ == 4
+per = And(l, a, p)
+s.add(per)
+if(s.check() == sat):
+    print(s.model())
+    
+    
+
