@@ -129,7 +129,24 @@ def p9():
     #9. X → Y, ¬X ⊢ ¬ Y           -- denying the antecedent
     # (X -> Y) /\ -x -> -y
     
-    x, y = Bools()
+    x, y = Bools('x, y')
+    s = Solver()
+    C9 = And(Implies(x, y), Implies(Not(x), Not(y)))
+    
+    # I believe this to be valid(Ended up being incorrect x => y != x =y)
+    
+    s.add(Not(C9))
+    s.check()
+    if(s.check() == unsat):
+        print("c9 is valid")
+    else : 
+        print("C9 is not Valid. Here is a counter example : ", s.model())
+        #Implications will result in a false if the first part of the implication is false, and the second is true
+        #That interpretatuion can be used in this problem(on both sides), and so this equation cannot be valid as 
+        #its possible to get false as a result 
+def p10():
+    #10. X → Y, Y → X ⊢ X ↔ Y      -- iff introduction
+    # ((X -> Y) /\ Y->X) -> X
 
 p1()
 p2()
@@ -139,3 +156,4 @@ p5()
 p6()
 p7()
 p8()
+p9()
