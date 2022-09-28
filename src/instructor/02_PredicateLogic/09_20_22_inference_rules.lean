@@ -488,6 +488,7 @@ false, false is true, so P is true (too)!
 /-
 A little practice. Which of the following propositions
 in predicate logic is true?
+
 -/
 
 def p1 : Prop := false → false
@@ -499,11 +500,20 @@ def p6 : Prop := false → 0 = 0
 def p7 : Prop := ∀ (P : Prop), true → P
 def p8 : Prop := ∀ (P : Prop), false → P 
 
+theorem p8_is_true : p8 :=
+begin
+unfold p8, 
+assume P, 
+assume f,
+apply false.elim f,
+end
+
 /-
 For each proposition, state whether it's true or false
 then give a proof of it (in English). Here are some formal
 proofs to help.
 -/
+
 
 example : p1 := 
 begin

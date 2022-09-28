@@ -2,6 +2,7 @@
   /-
 Below we've listed 19 proposed "inference rules" for reasoning 
 =======
+
 /-
 Below we've listed 20 proposed "inference rules" for reasoning 
 >>>>>>> 23f60dd1c3a63207034f104be25adec31f6d4449
@@ -55,6 +56,7 @@ in English and explain why it doesn't make sense. Put each such
 English language translation in a comment under the statement of
 the rule in Python.
 -/
+
 
 /-
 1. X ∨ Y, X ⊢ ¬Y             -- affirming the disjunct

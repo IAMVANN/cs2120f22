@@ -1,0 +1,8 @@
+There are no ways to prove that false is true; 
+so we use case analysis (Cases, name of that proof)
+
+Lean : 
+unfold,
+assume front of proposition
+PROVE back of proposition
+Not p means that p implies false; 
