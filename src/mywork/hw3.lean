@@ -51,8 +51,11 @@ really think about what you're saying with each word in your proof.
 See how the English presents the "story" of the formal proof in more
 natural, human, terms.
 
-ANSWER HERE:
--/
+ANSWER HERE: Suppose that Plato is a person, and every person 
+is mortal. We can represent the previous generalization of "every person is mortal"
+with the function everyoneIsMortal. We can then apply this function everyoneIsMortal
+to a specific person, Plato, as a proof to say that Plato is mortal.
+-/ 
 
 
 /- #2: English to Logic 
@@ -71,22 +74,23 @@ To do so, uncomment the following block of expressions then fill
 in blanks to complete this task.
 -/
 
-/- Uncomment this block to answer the question
+/- Uncomment this block to answer the question -/
+
 variable Person : Type
-variable Likes : _        -- a predicate with two Person arguments
-variable Jealous : _      -- same thing here  
+variable Likes : Person → Person  → Prop      -- a predicate with two Person arguments
+variable Jealous : Person → Person   → Prop    -- same thing here  
 variable Triangle :       -- note definition extends to next line
-  ∀ (p1 p2 p3 : Person), _  
-variables ed hannah mel : _
-variable likes_ed_hannah : _
-variable likes_hannah_mel : _
+  ∀ (p1 p2 p3 : Person),  Likes p1 p2  ∧ Likes p2 p3  → Jealous p1 p3
+variables ed hannah mel : Person
+variable likes_ed_hannah : Likes ed hannah 
+variable likes_hannah_mel : Likes hannah mel
 -- Finally write and use #check to check an expression that proves that ed is 
 -- jealous of mel.
 -- To ANSWER, fill in the _ with your expression. 
 -- HINT "Apply" what you know.
--/
 
-#check _
+
+#check Triangle ed hannah mel 
 
 
 /- #3: Proofing a propositions involving ∀ and ∨
@@ -96,6 +100,11 @@ the methods of inference we've covered: ∀ (P Q : Prop), P ∧ Q → Q ∨ P.
 
 Do read that proposition carefully, please. You don't need to write a
 long proof. Keep it concise. Identiy the inference rules you use.
+
+We assume that both P and Q are a proposition and that if P ∧ Q is true, then Q ∨ P must be true as well.
+We can prove this by using and introduction rule to deduce that P and Q are both true.
+Since we know that P is true,  we can apply or-intro right to deduce that Q ∨ P is always true
+since P is true. 
 
 -/
 
@@ -112,7 +121,12 @@ You may (and probably should) break up your expression over several
 lines, using line breaks and indentation to make the answer readable.
 -/
 
-variable Person : Type
+--variable Person : Type
 variable Knows : Person → Person → Prop
 def answer : Prop := 
-    _
+    ∀ (p1 : Person), 
+    ∃ (p2 : Person),
+    ∃ (p3 : Person),
+    Knows p1 p2 ∧ Knows p2 p3 ∧ Knows p3 p1
+
+    

@@ -15,7 +15,7 @@ Such a rule can be read both left to right and right to left. Left
 to right, it says that if all of the propositions on the left (in 
 the context) are true, then by applying the rule you can conclude 
 that the conclusion, after the turnstile, is also true. Reading 
-right to left, on the other hand, it says that if you want to show
+right to left, on the o→ ther hand, it says that if you want to show
 that the conclusion is true, then it is sufficient (suffices) to
 show that each of the propositions on the left is true; because if
 all those propositions are true, then you can apply the rule to
