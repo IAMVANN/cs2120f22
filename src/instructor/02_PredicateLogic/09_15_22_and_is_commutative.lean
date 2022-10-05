@@ -29,6 +29,7 @@ a proof of Q ∧ P.
 
 -- Here are two versions of a formal proof
 
+
 theorem         -- a keyword saying we're going to construct a proof
 or_commutes:   -- the name we'll give to the proof once it's accepted
 ∀ (P Q : Prop), P ∧ Q → Q ∨ P -- the proposition that's to be proved

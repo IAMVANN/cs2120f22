@@ -379,14 +379,19 @@ beautiful (∀ n, NaturalNumber(n) → Beautiful(n) : true),
 and I want to prove (7 is beautiful : true). Prove it.
 Name the inference rule and identify the arguments you
 give it to prove it.
+Arrow Eliminiation. By applying the generalization that every natural number is beautiful
+to a natural number (7), we can conclude that 7 is beutiful. 
 
 Constructive logic. Suppose I have a proof, pf, that every 
 natural number is beautiful (∀ (n : ℕ), beautiful n), and I 
 need a proof that 7 is beautiful. How can I get the proof 
 I need? Answer in both English and with a Lean expression.
 
+
+
 Formalize this story: All people are mortal, and Plato 
 is a person, therefore Plato is Mortal.
+(∀ Plato, People(Plato) → Mortal(Plato) : true )
 -/
 
 variable Person : Type

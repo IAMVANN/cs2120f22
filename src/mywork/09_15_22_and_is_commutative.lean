@@ -16,7 +16,17 @@ begin                             -- ⊢ ∀ (P Q : Prop), P ∧ Q → Q ∧ P
   let q : Q := and.elim_right h,  -- P Q : Prop, h : P ∧ Q, p : P, q : Q ⊢ Q ∧ P  (right)
   apply and.intro q p,            -- QED (that means the claim has been proven)
 end
-
+theorem 
+and_commutesa:
+∀ (P Q : Prop), P ∧ Q → Q ∧ P
+:= 
+begin 
+  assume P Q,
+  assume h: P ∧ Q,
+  let p : P:= and.elim_left h,
+  let q : Q:= and.elim_right h,
+  apply and.intro q p,
+end
 /-
 Theorem: Logical "and" is commutative.
 
@@ -28,7 +38,12 @@ a proof of Q ∧ P.
 -/
 
 -- Here are two versions of a formal proof
-
+theorem or_commutess:
+∀ (P Q : Prop), P ∧ Q → Q ∨ P :=
+begin 
+  intros P Q, 
+  
+end
 theorem         -- a keyword saying we're going to construct a proof
 or_commutes:   -- the name we'll give to the proof once it's accepted
 ∀ (P Q : Prop), P ∧ Q → Q ∨ P -- the proposition that's to be proved
