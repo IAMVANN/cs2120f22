@@ -53,7 +53,7 @@ natural, human, terms.
 
 ANSWER HERE: Suppose that Plato is a person, and every person 
 is mortal. We can represent the previous generalization of "every person is mortal"
-with the function everyoneIsMortal. We can then apply this function everyoneIsMortal
+with the function everyoneIsMortal. We can then apply this function/generalization of everyoneIsMortal
 to a specific person, Plato, as a proof to say that Plato is mortal.
 -/ 
 
