@@ -90,7 +90,7 @@ variable likes_hannah_mel : Likes hannah mel
 -- HINT "Apply" what you know.
 
 
-#check Triangle ed hannah mel 
+#check (Triangle ed hannah mel)
 
 
 /- #3: Proofing a propositions involving ∀ and ∨

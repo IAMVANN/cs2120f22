@@ -82,7 +82,6 @@ of the proposition is in the partially completed theorem
 below. 
 -/
 
-<<<<<<< HEAD
 theorem no_contradiction : ¬(X ∧ ¬X) :=
 begin
     assume h,
@@ -90,8 +89,6 @@ begin
     apply nx x,  
 end
 
-=======
->>>>>>> ff16f2a92baf67611a9954094dec09878db7da0a
 /-
 English. Prove ¬(X ∧ ¬X), where X is any proposition.
 This theorem states that it cannot be the case that 
