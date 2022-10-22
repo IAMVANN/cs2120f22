@@ -129,4 +129,16 @@ def answer : Prop :=
     ∃ (p3 : Person),
     Knows p1 p2 ∧ Knows p2 p3 ∧ Knows p3 p1
 
-    
+/-example : 0 ¬= 1 :=
+begin
+assume p, 
+cases p, 
+end-/
+
+example : ∀ P, ¬ (P ∧ ¬P) :=
+begin
+assume P, 
+assume pandnp, 
+cases pandnp with p np, 
+apply false.elim (np p), 
+end

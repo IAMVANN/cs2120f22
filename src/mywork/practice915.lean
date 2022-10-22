@@ -1,3 +1,10 @@
+
+
+/- intros introduction, elimination rules, then solve
+introductions - giving the component parts, we build a prop back up
+eliminatiion -taking a larger thing, break it up to components. 
+
+-/
 theorem and_commutes:
 ∀ (P Q : Prop), P ∧ Q → Q ∧ P   :=
 begin
@@ -17,6 +24,11 @@ begin
     
 
 end
+theorem bh :
+∀ (P Q : Prop),
+(P ∨ Q)
+(P → R)
+(Q → R) → R. 
 theorem baz : 
   ∀ (P Q R S: Prop),
     R → P ∨ Q ∨ R ∨ S :=
