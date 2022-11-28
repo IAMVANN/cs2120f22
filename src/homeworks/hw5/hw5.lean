@@ -24,7 +24,8 @@ State and prove the proposition that there's some
 natural number whose square is 144.
 -/
 
-example : _ := _
+example :  ∃ (n : ℕ ), n * n = 144 :=   exists.intro 12 rfl
+
 
 
 /- #1B.
@@ -35,7 +36,10 @@ for string.append, the function for gluing two
 strings together into one.
 -/
 
-example : _ := _
+example : ∃(s : string), s ++ "!" = "I love logic!." := exists.intro "I love logic" rfl
+example : ∃(s : string), s ++ "!" = "I love logic!" := exists.intro "I love logic" rfl
+
+/- I Don't think this is proveable with the period at the end-/
 
 /- #1C.
 
@@ -46,8 +50,13 @@ takes just one witness as a time, so you will
 have to apply it more than once.
 -/
 
-example : _ :=
+example : ∃ (x y z : ℕ ), x*x + y*y = z*z := 
 begin
+apply exists.intro 3, 
+apply exists.intro 4, 
+apply exists.intro 5, 
+apply rfl, 
+
 end
 
 /- #1D
@@ -56,7 +65,7 @@ three natural number arguments, x, y, and z,
 yielding the proposition that x*x + y*y = z*z.
 -/
 
-def pythag_triple (x y z : ℕ) := _
+def pythag_triple (x y z : ℕ) := x*x + y*y = z*z
 
 /- #1E
 State the propositionthat there exist x, y, z, 
@@ -64,9 +73,12 @@ natural numbers, that satisfy the pythag_triple,
 predicate, then prove it. (Use "example : ...")
 -/
 
-example : _  :=
+example : ∃ (x y z : ℕ ), x*x + y*y = z*z  :=
 begin
-_
+apply exists.intro 3, 
+apply exists.intro 4, 
+apply exists.intro 5, 
+apply rfl, 
 end
 
 /- #2A
@@ -80,7 +92,10 @@ other number involved, right?
 -/
 
 def multiple_of (n m : ℕ) := ∃ (k), n = m * k  
-
+-- ^^ this?
+/-
+de
+-/
 /- #2B
 
 Using the predicate multiple_of, state and 
@@ -137,9 +152,10 @@ in the English language proof below.
 
 example (n m k : ℕ) : n + (m + k) = (n + k) + m := 
 begin 
-ring 
+ring, 
 end  
--- Enlish proof (it's short!): 
+-- Enlish proof (it's short!): To prove n + (m + k) = (n + k) + m, we use the ring tactic which 
+-- normalizes/simplifies both equations into the same form and shows that they are equivilent. 
 
 /-
 Whoa! It's so easy to prove addition associative? 
@@ -184,10 +200,18 @@ of question is to figure out what that number
 has to be. Also, be sure to use multiple_of in
 formally stating the proposition to be proved.
 -/
-
-example : _ :=
+/-Using the predicate multiple_of, state and 
+prove the proposition that every natural number 
+that is a multiple of 6 is also a multiple of 3. -/
+def multiple_of2 (n m : ℕ) := ∃ (k), n = m * k  
+example : (∀ (n : ℕ), (multiple_of n 6) → (multiple_of n 3)) :=
 begin
-_
+unfold multiple_of, 
+assume n h, 
+cases h with nn pfnn, 
+apply exists.intro (nn * 2),
+ring_nf, 
+assumption, 
 end 
 
 
@@ -210,10 +234,22 @@ The rewrite tactic uses the axiom that states
 that you can replace equals by equals without
 changing the truth values of propositions. 
 -/
-
-example (n h k : ℕ) : _ :=
+def multiple_of3 (n m : ℕ) := ∃ (j), n = m * j  
+example (n h k : ℕ) : (multiple_of n h) ∧ (multiple_of h k) → (multiple_of n k) :=
 begin
-_
+assume o, 
+cases o with nh nk, 
+unfold multiple_of, 
+unfold multiple_of at nh,
+unfold multiple_of at nk,
+
+cases nh with y1 py1, 
+cases nk with y2 py2, 
+
+apply exists.intro (y1 * y2),
+rw py1, 
+rw py2, 
+ring, 
 end
 
 
@@ -237,9 +273,12 @@ example
   (isCool : Person → Prop)
   (LogicMakesCool : ∀ (p), KnowsLogic p → isCool p)
   (SomeoneKnowsLogic : ∃ (p), KnowsLogic p) :
-  _ :=
+  ∃ (p), isCool p
+  :=
 begin
-_
+cases (SomeoneKnowsLogic) with p Pfp,
+apply exists.intro p _, 
+exact (LogicMakesCool p Pfp),
 end
 
 
@@ -252,10 +291,16 @@ someone is not happy then not everyone is happy.
 example 
   (Person : Type)
   (Happy : Person → Prop) :
-  _
+  (∃ (p), ¬Happy(p)) → 
+  (∀ (j), ¬Happy(j))
   :=
 begin
-  _
+  assume h, 
+  cases h with p NotHappy_p,
+  -- apply p, 
+  assume j nhj, 
+  -- let nhp := (nhj p), 
+
 end
 
 /- #3C
@@ -275,11 +320,16 @@ you don't yet have in order to make it
 clear that there's a contradiction in
 your set of assumptions. 
 -/
+
 example 
   (α : Type)
   (P : α → Prop) :
-  _ :=
+  ∀ (a), P(a) ↔ ∀(b), ¬P(b) → false :=
 begin
+assume a, 
+apply iff.intro, 
+assume pa b npb, 
+
 end 
 
 
@@ -297,9 +347,10 @@ taking objects of that type.
 example 
   (T : Type)
   (P : T → Prop) :
-  _ :=
+  ∀(a b : T), P(a) → false → ¬P(b) → true:=
 begin
-_
+assume a b pa f, 
+apply false.elim(f), 
 end
 
 
@@ -315,7 +366,12 @@ example
   (α : Type)
   (P : α → Prop)
   (Q : α → Prop): 
-  _ :=
+  (∃ (e), P(e) ∨ Q(e)) → ∃ (b h), P(b) ∨ Q(h) :=
 begin
+assume h, 
+cases h with e Pfe, 
+apply exists.intro e, 
+apply exists.intro e, 
+assumption, 
 end
 
