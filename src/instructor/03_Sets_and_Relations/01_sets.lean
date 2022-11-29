@@ -8,6 +8,7 @@ it's even, (isEven n).
 
 def isEven (n : ℕ) : Prop := n%2 = 0
 
+
 /-
 You've already met the idea that this predicate 
 literally represents the set of even natural numbers:
@@ -235,7 +236,6 @@ def set135 := { n : ℕ | n = 1 ∨ n = 3 ∨ n = 5 }
 -- Remember: This is a predicate with argument n
 -- Predict what you get when you apply it to 5, then check
 #reduce set135 5
-
 /-
 Now let's prove a few things, starting with the proposition
 that the value 5 is "in" this set.
@@ -246,6 +246,7 @@ begin
 -- applying set135 to 5 yields 5 = 1 ∨ 5 = 3 ∨ 5 = 5
 show 5 = 1 ∨ 5 = 3 ∨ 5 = 5, -- which has a proof, to wit:
 -- we can prove the right hand side, so let's go
+
 right,    -- new Lean tactic: shorthand for apply or.elim_right
 right,    -- new Lean tactic: shorthand apply or.elim_right
 exact rfl,-- trivially true by the reflexivity of equality

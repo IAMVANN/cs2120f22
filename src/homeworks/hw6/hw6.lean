@@ -20,6 +20,12 @@ n > 0 (i.e., n = n' + 1 = (nat.succ n') for some n').
 -/
 
 -- Answer
+namespace impl_cases
+
+def isZero : ℕ → bool 
+  | 0 := true
+  | (nat.succ n') := false 
+
 
 
 -- These test cases should pass except the last 
@@ -43,7 +49,7 @@ case where n = n' + 2, it's fib n' + fib n'+1
 def fib : ℕ → ℕ 
 | 0 := 0
 | 1 := 1
-| (n' + 2) := _
+| (n' + 2) := fib n' + fib (n'+1)
 
 -- These test cases should pass except the last 
 example : fib 0 = 0 := rfl
@@ -70,7 +76,7 @@ one. (That's still the right answer, right!)
 
 def add : ℕ → ℕ → ℕ 
 | n 0 := n
-| n (m' + 1) := _
+| n (m' + 1) := n + (m' + 1)
 
 -- These test cases should pass except the last 
 example : add 0 0 = 0 := rfl
@@ -94,8 +100,8 @@ any function, f : α → α.
 -/
 
 def involutive {α : Sort u} (f : α → α) := 
-  _
-
+  α
+  
 /-
 Now prove the proposition that the Boolean negation 
 function, called bnot in Lean, is an involution. The
@@ -105,6 +111,7 @@ Ask, how can I prove it? Hint: It's just a bool!
 
 example : involutive bnot :=
 begin
+  apply bnot (bnot false ),
 end 
 
 
@@ -123,7 +130,7 @@ your answer. Remember: Predicates take values
 to propositions. 
 -/
 
-def perfectSquare (n : ℕ) : Prop := _
+def perfectSquare (n : ℕ) : Prop := ∃(k: ℕ), n = k * k 
 
 
 /- B [5 points].
@@ -133,7 +140,7 @@ set comprehension (set builder) notation and
 the perfectSquare predicate.
 -/
 
-def perfectSquares : set ℕ := _
+def perfectSquares : set ℕ := { n : ℕ | perfectSquare n }
 
 
 /- C [5 point].
@@ -141,11 +148,20 @@ def perfectSquares : set ℕ := _
 State and prove the proposition that 25 is in
 the set of perfect squares. Use set membership
 notation in writing your proposition.
+
 -/
 
 
-example : _ :=
+example : 25 ∈ perfectSquares :=
 begin
+--exact rfl, 
+unfold perfectSquares, 
+show {n : ℕ | perfectSquare n} 25, 
+show perfectSquare 25, 
+unfold perfectSquare, 
+apply exists.intro 5, 
+apply rfl, 
+
 end
 
 
@@ -171,14 +187,23 @@ using set and set operator notations.
 
 
 -- 1. intersection
-example : _ :=
+example : 4 ∈ X ∩ Y :=
 begin
-_
+  split, 
+  right, 
+  right, 
+  exact rfl, 
+  left, 
+  exact rfl,  
 end
 
 -- 2. union
-example : _ :=
+example : 4 ∈ X ∪ Y :=
 begin
+  right, 
+  left, 
+  exact rfl,  
+
 end
 
 
@@ -201,16 +226,29 @@ goal and proceed accordingly.
 -/
 
 -- 3. difference
-example : _ :=
+example : 4 ∉ X\Y :=
+
 begin
-_
+assume h, 
+cases h with hx hny, 
+
+cases hx, 
+cases hx, 
+cases hx, 
+cases hx, 
+cases hx, 
+let n : 4 ∈ {4, 5, 6} := _,
+contradiction, 
+apply or.intro_left, 
+apply rfl, 
 end
 
 
 -- 4. complement
-example : _ :=
+example : 10 ∈ Xᶜ :=
 begin
-_
+assume h, 
+repeat {cases h}, 
 end 
 
 
@@ -239,8 +277,8 @@ in the rest!
 def single_valued   -- predicate on relations
 {α β : Type} 
 (r : α → β → Prop) 
-: Prop := _
 
+: Prop := ∀(x : α), ∀(y z: β ),  r x y → r x z → y = z
 /- Part #2 [5 points]
 
 Define a relation, sqrs : ℕ → ℕ → Prop, where 
@@ -248,7 +286,7 @@ sq x y is satisfied iff y is the square of x.
 -/
 
 def sqrs : ℕ → ℕ → Prop 
-| x y := _
+| x y := y = x^2 
 
 /- Part #3 [5 points] 
 
@@ -258,7 +296,11 @@ sqrs relation is single-valued.
 
 example : single_valued sqrs :=
 begin
-_
+  assume x y z, 
+  assume xy xz, 
+  cases xy, 
+  cases xz, 
+  assumption, 
 end
 
 
@@ -278,7 +320,7 @@ def injective
 (r : α → β → Prop)  -- any relation on α and β 
 (a b : α)           -- any two arbitrary α values
 (x : β) :           -- any β value
-Prop := _
+Prop := r a x → r b x → a = b
 
 
 /- C [10 points].
@@ -299,6 +341,9 @@ example :
       ∃ (b : β), 
         f a = b :=
 begin
-_
+assume h j k l, 
+let pj := k l, 
+apply exists.intro pj, 
+apply rfl, 
 end
 
