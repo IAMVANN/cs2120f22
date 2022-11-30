@@ -76,7 +76,7 @@ one. (That's still the right answer, right!)
 
 def add : ℕ → ℕ → ℕ 
 | n 0 := n
-| n (m' + 1) := n + (m' + 1)
+| n (m' + 1) := n + m' + 1
 
 -- These test cases should pass except the last 
 example : add 0 0 = 0 := rfl
@@ -101,7 +101,7 @@ any function, f : α → α.
 
 def involutive {α : Sort u} (f : α → α) := 
   α
-  
+
 /-
 Now prove the proposition that the Boolean negation 
 function, called bnot in Lean, is an involution. The
