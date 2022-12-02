@@ -8,10 +8,16 @@ P, then not every object of type α fails to have property,
 P. Add a brief comment before each line of your proof 
 script to provide what amounts to the outline of a good
 English language proof.
+NOT DONE!!!
 -/
 
 example (α : Type) (P : α → Prop) : (∃ a, P a) → (¬(∀ x, ¬ P x)) :=
 begin
+assume h, -- we first use arrow intro
+cases h with α pα, -- use case analysis to proof of a and property of a
+assume j, -- use negation
+apply j α, --
+apply pα, 
 end
 
 
