@@ -13,11 +13,17 @@ NOT DONE!!!
 
 example (α : Type) (P : α → Prop) : (∃ a, P a) → (¬(∀ x, ¬ P x)) :=
 begin
-assume h, -- we first use arrow intro
-cases h with α pα, -- use case analysis to proof of a and property of a
-assume j, -- use negation
-apply j α, --
-apply pα, 
+-- we first use arrow introduction
+assume h,
+-- use case analysis to proof of a and property of a
+cases h with α pα, 
+-- Proof by negation
+assume j,
+-- We apply α to j, and created a proof of -P a
+let k:= j α, 
+-- we have a proof of -P a and P a which is a contridiction
+-- and we are done. 
+contradiction, 
 end
 
 
@@ -29,6 +35,13 @@ object that has it. If you try to prove the converse in
 our constructive logic, what happens? Show you work, and
 then briefly but clearly explain exactly what goes wrong.
 -/
+example (α : Type) (P : α → Prop) :  (¬(∀ x, ¬ P x)) → (∃ a, P a) :=
+begin
+-- we first use arrow introduction
+assume h,
+
+apply exists.intro,  -- it doesn't work since we need classical.em
+end
 
 
 
@@ -41,11 +54,17 @@ answer yes/no then briefly justify your answer.
 ( domain = ℕ, r = {(0,0),(1,1),(2,2)}, co-domain=ℕ )
 
 A. Is this relation reflexive? 
-B. Is this relation symmetric? 
-C. Is this relation transitive? 
-D. Is this relation an equivalence relation? 
--/
+No, it doesn't hold true for any natural number greater than 2
 
+B. Is this relation symmetric?  r a b → r b a
+True, because each number in this relationship maps to itself. 
+
+C. Is this relation transitive? 
+Yes. R does not relate 3 seperate objects together, so it is technically
+transiitve. 
+D. Is this relation an equivalence relation?
+No, its not reflexive. 
+-/
 
 
 /- #3
@@ -55,6 +74,11 @@ if, for all values in its domain, a and b, if r a b
 and if r b a then a = b. Give an example of a familiar
 arithmetic relation that's anti-symmetric, and briefly
 explain why it's so.
+equality is an example of this relation. 
+Anti-symetric : r a b → r b a → a = b 
+Equaility is an example because 
+if a = b (r a b) and b = a(r a b), then a = b. 
+
 -/
 
 
@@ -64,6 +88,7 @@ whenever, for any a and b, if r a b then ¬ r b a. Be
 careful to note that asymmetry and antisymmetry are
 different properties.  Answer each of the following 
 sub-questions. We give you a formal definition of anti
+
 -/
 
 def is_asymmetric 
@@ -77,6 +102,7 @@ Name a familar arithmetic relation that's asymmetric
 and briefly explain why you think it's asymmetric.
 
 Answer here:
+ Greater than because if a > b, then b cannot be greater than a. 
 -/
 
 /- C: 
@@ -90,6 +116,8 @@ assume that r is asymmetric). Now assume r a a. <finish
 the proof>.
 
 Answer here (rest of proof): 
+We now have a proof of r a a which is a contridiction to our goal 
+→ r a a.
 -/
 
 /- D.
@@ -107,7 +135,12 @@ example
 ¬ ∃ (a : α), r a a :=
 begin
 -- proof by negation
-
+assume p1, --
+cases p1 with a raa, --we use case anaylsis to get a proof of a and raa
+unfold is_asymmetric at h, -- we unfold the equation is_asymmetric that is in variable h, 
+have p2 := h a a, --  we apply a to the function h twice, and set that value to p2
+have nraa := p2 raa, -- we then develop a proof of not raa by applying raa to p2
+contradiction, -- we have a proof of not raa and raa which is a contridiction
 end
 
 
@@ -120,6 +153,11 @@ that α is inhabited.
 
 example (α : Type) (a : α): ¬ is_asymmetric (@eq α) :=
 begin
+unfold is_asymmetric, 
+assume h, 
+have p1 := h a a, 
+have neq := p1 rfl, 
+contradiction, 
 end
 
 /- Extra credit: What exactly goes wrong in a formal 
@@ -127,6 +165,12 @@ proof if you drop the "inhibitedness" condition? Give
 as much of a formal proof as you can then explain why
 it can't be completed (if it can't!).
 -/
+example (α : Type) (a : α): ¬ is_asymmetric (@eq α) :=
+begin
+assume h, 
+unfold is_asymmetric at h, 
+-- we don't have values of type α to work with
+end
 
 
 
@@ -151,6 +195,25 @@ have covered in class.
 
 example : ∀ m : ℕ, equivalence (equiv_mod_m m) :=
 begin
+unfold equivalence, 
+unfold equiv_mod_m, 
+
+assume m, 
+
+split, 
+unfold reflexive, 
+assume x, 
+exact rfl, 
+
+split, 
+unfold symmetric, 
+assume x y h, 
+rw <-h, 
+
+unfold transitive, 
+assume x y z h j, 
+rw h, 
+apply j, 
 end
 
 
@@ -167,11 +230,17 @@ the domain is all living persons, and the co-domain
 is all natural numbers.
 
 -- it's a function: 
+Yes since its single valued.
 -- it's total: 
--- it's injective (where "): 
+No, not every living human has a US tax payer id. 
+-- it's injective: 
+Yes because two people cannot map to the same taxpayer ids. 
+
 -- it's surjective (where the co-domain is all ℕ):
--- it's strictly partial:  
--- it's bijective: 
+No, because not every natural number/possible taxpayer id number has a person associated with it.
+
+-- it's strictly partial: Yes, not every living human has a US tax payer id. 
+-- it's bijective: No, its not surjective. 
 -/
 
 
@@ -182,9 +251,9 @@ numbers. Which of the following properties does
 it have? Explain each answer enough to show you
 know why your answer is correct.
 
--- reflexive:
--- symmetric: 
--- transitive:
+-- reflexive: It does not cover the whole domain
+-- symmetric: We cannot prove that there is a contridictionary pair, so it has to be symmetric. 
+-- transitive:We cannot prove that there is a contridictionary pair, so it has to be transitive.
 -/
 
 
@@ -211,8 +280,8 @@ of a good English language proof.
 example : ¬reflexive empty_rel :=
 begin
 unfold reflexive,
-assume h,
-let x := h 0,
+assume h, -- proof by negation
+let x := h 0, 
 cases x,
 end
 
@@ -239,9 +308,9 @@ S (of objects of some type), is a partial order.
 Pf:  
 Suppose S is a set, with a ⊆ S and b ⊆ S subsets. Then
 
-1. 
-2. 
-3. 
+1. It is reflexive since a is a subset of it self.  
+2. It is anti-symmetric since if a is a ⊆  of b and b is a ⊆  of a, then a = b. 
+3. It is a transitive, since if a ⊆  b , and b ⊆  c, then it must be the case that a ⊆ c. 
 
 QED.
 -/
@@ -280,6 +349,29 @@ example
   (a b: set α) :
   (a ∪ b)ᶜ = aᶜ ∩ bᶜ := 
 begin
+
+ext, 
+split, 
+assume naub, 
+split, 
+assume xa, 
+have aub := or.inl xa, 
+have f := naub aub, 
+contradiction, 
+
+assume xb, 
+have aub := or.inr xb, 
+have f:= naub aub, 
+contradiction, 
+
+assume h, 
+assume aub, 
+cases aub with a b, 
+cases h, 
+contradiction, 
+
+cases h, 
+contradiction, 
 end
 
 
